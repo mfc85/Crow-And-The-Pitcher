@@ -13,6 +13,7 @@ public class CrowMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         targetDestOriginalPosition = targetDest.transform.position; // Saves the resting spot upon start
+        targetPosition = characterController.transform.position; // Initialize targetPosition to the character's initial position
     }
 
     void Update()
@@ -28,14 +29,20 @@ public class CrowMovement : MonoBehaviour
         }
 
         // Calculate the movement direction and move Crow
-        Vector3 moveDirection = (targetPosition - characterController.transform.position).normalized;
-        characterController.SimpleMove(moveDirection * moveSpeed);
+        Vector3 moveDirection = (targetPosition - characterController.transform.position);
 
-        // Checks to see if Crow is at its destination
-        if (Vector3.Distance(characterController.transform.position, targetPosition) < arrivalDistance)
+        // If Crow is close enough to the target, stop moving
+        if (moveDirection.magnitude < arrivalDistance)
         {
-            targetDest.transform.position = targetDestOriginalPosition; // returns target to resting spot
+            moveDirection = Vector3.zero;
+            targetDest.transform.position = targetDestOriginalPosition;
         }
+        else
+        {
+            moveDirection = moveDirection.normalized * moveSpeed;
+        }
+
+        characterController.SimpleMove(moveDirection);
     }
 
     void MoveToClickPosition()
@@ -52,7 +59,7 @@ public class CrowMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Clicked Object is not tagged as Ground!");
+
             }
 
             targetDest.transform.position = hit.point;
@@ -78,7 +85,7 @@ public class CrowMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Clicked Object is not tagged as Ground!");
+
             }
 
             targetDest.transform.position = hit.point;
