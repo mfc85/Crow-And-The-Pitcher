@@ -17,6 +17,16 @@ public class PointAndClickCharacterMovement : MonoBehaviour
         {
             MoveToClickPosition();
         }
+
+        if (characterController.isGrounded)
+        {
+            // Keep the character on the ground
+            targetPosition.y = characterController.transform.position.y;
+        }
+
+        // Calculate the movement direction and move the character
+        Vector3 moveDirection = (targetPosition - characterController.transform.position).normalized;
+        characterController.SimpleMove(moveDirection * moveSpeed);
     }
 
     void MoveToClickPosition()
@@ -30,27 +40,11 @@ public class PointAndClickCharacterMovement : MonoBehaviour
             if (hit.collider.CompareTag("Ground"))
             {
                 targetPosition = hit.point;
-                // Ignore the Y-axis to keep the character on the same level as the ground
-                targetPosition.y = characterController.transform.position.y;
-
-                // Start the Coroutine to move towards the target position
-                StartCoroutine(MoveTowardsTarget());
             }
             else
             {
                 Debug.Log("Clicked Object is not tagged as Ground!");
             }
-        }
-    }
-
-    System.Collections.IEnumerator MoveTowardsTarget()
-    {
-        while (Vector3.Distance(characterController.transform.position, targetPosition) > 0.1f)
-        {
-            // Move the character towards the target position
-            Vector3 moveDirection = (targetPosition - characterController.transform.position).normalized;
-            characterController.SimpleMove(moveDirection * moveSpeed);
-            yield return null;
         }
     }
 }
