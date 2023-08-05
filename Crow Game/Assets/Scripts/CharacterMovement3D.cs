@@ -18,6 +18,11 @@ public class PointAndClickCharacterMovement : MonoBehaviour
             MoveToClickPosition();
         }
 
+        if (Input.GetMouseButton(0))
+        {
+            MoveTowardsMousePosition();
+        }
+
         if (characterController.isGrounded)
         {
             // Keep the character on the ground
@@ -36,10 +41,32 @@ public class PointAndClickCharacterMovement : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            // Check if the raycast hit the ground or any other movable surface
+            // Check if the raycast hit any object tagged as "Ground"
             if (hit.collider.CompareTag("Ground"))
             {
                 targetPosition = hit.point;
+            }
+            else
+            {
+                Debug.Log("Clicked Object is not tagged as Ground!");
+            }
+        }
+    }
+
+    void MoveTowardsMousePosition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            // Check if the raycast hit any object tagged as "Ground"
+            if (hit.collider.CompareTag("Ground"))
+            {
+                Vector3 targetPosition = hit.point;
+                targetPosition.y = characterController.transform.position.y;
+
+                this.targetPosition = targetPosition;
             }
             else
             {
