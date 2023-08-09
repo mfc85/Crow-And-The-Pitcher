@@ -15,6 +15,9 @@ public class CrowMovement : MonoBehaviour
     public bool isHoldingPebble = false;
     public bool canHoldMultiplePebbles = false; // Limit for the Exposition: Crow only places the pebbles in one-by-one
 
+    //for Exposition + Talking to NPCs
+    public bool canMove = false;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -24,6 +27,8 @@ public class CrowMovement : MonoBehaviour
 
     void Update()
     {
+        if (!canMove) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             MoveToClickPosition();
@@ -59,7 +64,7 @@ public class CrowMovement : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             // Check if the raycast hit any object tagged as "Ground"
-            if (hit.collider.CompareTag("Ground"))
+            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Pebble") || hit.collider.CompareTag("Pitcher"))
             {
                 targetPosition = hit.point;
             }
@@ -82,7 +87,7 @@ public class CrowMovement : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             // Check if the raycast hit any object tagged as "Ground"
-            if (hit.collider.CompareTag("Ground"))
+            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Pebble") || hit.collider.CompareTag("Pitcher"))
             {
                 Vector3 targetPosition = hit.point;
                 targetPosition.y = characterController.transform.position.y;
