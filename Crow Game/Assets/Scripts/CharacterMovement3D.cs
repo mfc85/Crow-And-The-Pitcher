@@ -18,6 +18,9 @@ public class CrowMovement : MonoBehaviour
     //for Exposition + Talking to NPCs
     public bool canMove = false;
 
+    //variable for items in Crow's Mouth
+    public GameObject pebbleInBeak;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -41,6 +44,16 @@ public class CrowMovement : MonoBehaviour
 
         // Calculate the movement direction and move Crow
         Vector3 moveDirection = (targetPosition - characterController.transform.position);
+
+        //Flips Crow based on direction
+        if(moveDirection.x < 0) // left
+        {
+            transform.rotation = Quaternion.Euler(0, -180, 0);
+        }
+        else if(moveDirection.x > 0) // right
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
 
         // If Crow is close enough to the target, stop moving
         if (moveDirection.magnitude < arrivalDistance)
@@ -112,6 +125,7 @@ public class CrowMovement : MonoBehaviour
             {
                 isHoldingPebble = true;
                 Destroy(other.gameObject);
+                pebbleInBeak.SetActive(true);
 
             }
             else if (canHoldMultiplePebbles)
@@ -128,6 +142,7 @@ public class CrowMovement : MonoBehaviour
         {
             isHoldingPebble = false;
             pebblesCollected++;
+            pebbleInBeak.SetActive(false);
 
             Debug.Log("Pebbles in Pitcher: " + pebblesCollected);
         }

@@ -45,12 +45,12 @@ public class StoryManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !pebbleCompletion && allowAdvance)
+        if (Input.GetMouseButtonDown(0) && allowAdvance && currentLine < storyLines.Length - 1)
         {
             ShowNextLine();
         }
 
-        if (characterMovement.pebblesCollected == 3 && pebbleCompletion == false)
+        if (characterMovement.pebblesCollected == 3 && !pebbleCompletion)
         {
             OnTaskCompleted();
         }
@@ -58,26 +58,18 @@ public class StoryManager : MonoBehaviour
 
     public void ShowNextLine()
     {
-        // This keeps the final line from being shown UNTIL all the pebbles are picked up
-        if (currentLine < storyLines.Length - 1 || (currentLine == storyLines.Length - 1 && pebbleCompletion))
-        {
-            storyText.text = storyLines[currentLine];
-            currentLine++;
+        storyText.text = storyLines[currentLine];
+        currentLine++;
 
-            if (currentLine == 3)
-            {
-                characterMovement.canMove = true;
-            }
-        }
-        else if (!pebbleCompletion && currentLine == storyLines.Length - 1)
+        if (currentLine == 3)
         {
-            // Don't advance.
+            characterMovement.canMove = true;
         }
     }
 
     public void OnTaskCompleted()
     {
         pebbleCompletion = true;
-        ShowNextLine();
+        storyText.text = storyLines[storyLines.Length - 1];  // Display the last line directly here
     }
 }
