@@ -9,6 +9,12 @@ public class CrowMovement : MonoBehaviour
     public GameObject targetDest;
     private Vector3 targetDestOriginalPosition; // Stores resting spot of the target indicator
 
+    //variables for pebble collection
+    public int pebblesCollected = 0;
+    public int pebblesNeeded = 10;
+    public bool isHoldingPebble = false;
+    public bool canHoldMultiplePebbles = false; // Limit for the Exposition: Crow only places the pebbles in one-by-one
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -92,4 +98,35 @@ public class CrowMovement : MonoBehaviour
 
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Pebble"))
+        {
+            if(!canHoldMultiplePebbles && !isHoldingPebble)
+            {
+                isHoldingPebble = true;
+                Destroy(other.gameObject);
+
+            }
+            else if (canHoldMultiplePebbles)
+            {
+                pebblesCollected++;
+                Destroy(other.gameObject);
+
+                Debug.Log("Pebbles Collected: " + pebblesCollected);
+            }
+            
+        }
+
+        else if(other.gameObject.CompareTag("Pitcher") && isHoldingPebble)
+        {
+            isHoldingPebble = false;
+            pebblesCollected++;
+
+            Debug.Log("Pebbles in Pitcher: " + pebblesCollected);
+        }
+
+    }
+
 }
