@@ -21,9 +21,6 @@ public class CrowMovement : MonoBehaviour
     //variable for animator
     public Animator animator;
 
-    //variable for pitcher animation interaction
-    public Pitcher pitcherComponent;
-
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -148,6 +145,7 @@ public class CrowMovement : MonoBehaviour
                 pebblesCollected++;
                 Destroy(other.gameObject);
 
+                Debug.Log("Pebbles Collected: " + pebblesCollected);
             }
             
         }
@@ -157,8 +155,7 @@ public class CrowMovement : MonoBehaviour
             isHoldingPebble = false;
             pebblesCollected++;
 
-            pitcherComponent.AddPebble();
-
+            Debug.Log("Pebbles in Pitcher: " + pebblesCollected);
         }
 
     }

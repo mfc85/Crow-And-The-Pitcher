@@ -1,31 +1,33 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraEdgeFollow : MonoBehaviour
 {
-    public Transform crowTransform;
-    public Vector3 offsetToCrow;
-    public Vector3 targetPosition;
-    public float transitionSpeed = 1.0f;
-    private bool shouldMove = false;
+    public Transform player;
+    public float edgeThreshold = 0.1f;
+    public float smoothTime = 0.2f;
+
+    private Vector3 lastPlayerPosition;
+    private Vector3 currentVelocity;
 
     private void Update()
     {
-        if (shouldMove)
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(player.position);
+        float playerHorizontalMovement = player.position.x - lastPlayerPosition.x;
+
+        Vector3 targetPosition = transform.position;
+
+        if (viewPos.x < edgeThreshold && playerHorizontalMovement < 0) // Player is moving left and near the left edge
         {
-            // Interpolate the camera's position.
-            transform.position = Vector3.Lerp(transform.position, targetPosition, transitionSpeed * Time.deltaTime);
-
-            // Ensure the camera doesn't move past the Crow.
-            if (transform.position.x > crowTransform.position.x + offsetToCrow.x)
-            {
-                transform.position = new Vector3(crowTransform.position.x + offsetToCrow.x, transform.position.y, transform.position.z);
-            }
+            targetPosition += Vector3.left * Mathf.Abs(playerHorizontalMovement);
         }
-    }
+        else if (viewPos.x > 1.0f - edgeThreshold && playerHorizontalMovement > 0) // Player is moving right and near the right edge
+        {
+            targetPosition += Vector3.right * Mathf.Abs(playerHorizontalMovement);
+        }
 
-    // Public function to start the camera movement.
-    public void StartCameraMove()
-    {
-        shouldMove = true;
+        // Smooth the camera movement
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
+
+        lastPlayerPosition = player.position;
     }
 }
