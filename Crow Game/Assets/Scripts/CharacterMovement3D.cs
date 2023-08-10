@@ -18,8 +18,8 @@ public class CrowMovement : MonoBehaviour
     //for Exposition + Talking to NPCs
     public bool canMove = false;
 
-    //variable for items in Crow's Mouth
-    public GameObject pebbleInBeak;
+    //variable for animator
+    public Animator animator;
 
     void Start()
     {
@@ -67,6 +67,19 @@ public class CrowMovement : MonoBehaviour
         }
 
         characterController.SimpleMove(moveDirection);
+
+        // Animation Status
+        if(moveDirection.magnitude > 0)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+
+        animator.SetBool("hasPebble", isHoldingPebble);
+
     }
 
     void MoveToClickPosition()
@@ -125,7 +138,6 @@ public class CrowMovement : MonoBehaviour
             {
                 isHoldingPebble = true;
                 Destroy(other.gameObject);
-                pebbleInBeak.SetActive(true);
 
             }
             else if (canHoldMultiplePebbles)
@@ -142,7 +154,6 @@ public class CrowMovement : MonoBehaviour
         {
             isHoldingPebble = false;
             pebblesCollected++;
-            pebbleInBeak.SetActive(false);
 
             Debug.Log("Pebbles in Pitcher: " + pebblesCollected);
         }
