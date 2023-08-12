@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayGameButton : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     public Button playButton;
-    public GameObject UICanvas;  // Drag the entire UI Canvas here
-    public Animator cameraAnimator;  // Drag the Camera (with the Animator component) here
+    public GameObject UICanvas;
+    public Animator cameraAnimator;
 
-    private bool animationPlayed = false;  // Flag to check if animation has played
+    private bool animationPlayed = false;
 
     private void Start()
     {
@@ -16,11 +16,17 @@ public class PlayGameButton : MonoBehaviour
 
     void StartGame()
     {
-        if (!animationPlayed) // Check if animation hasn't been played
+        if (!animationPlayed)
         {
-            UICanvas.SetActive(false);  // Hides the entire UI
+            UICanvas.SetActive(false);
             cameraAnimator.Play("CameraIntroAnimation");
-            animationPlayed = true;  // Set the flag to true
+            animationPlayed = true;
         }
+    }
+
+    // Public function to start the Act 1 Transition animation
+    public void PlayAct1TransitionAnimation()
+    {
+        cameraAnimator.Play("CameraAct1Transition");
     }
 }

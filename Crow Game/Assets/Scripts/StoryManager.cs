@@ -11,8 +11,7 @@ public class StoryManager : MonoBehaviour
 
     private int currentLine = 0;
     private bool pebbleCompletion = false;
-    private bool allowAdvance = false;
-    private float advanceDelay = 0.5f;
+    private float displayDuration = 5.0f;
 
     private string[] storyLines =
     {
@@ -33,23 +32,11 @@ public class StoryManager : MonoBehaviour
     {
         titleScreenUI.SetActive(false);
         expositionUI.SetActive(true);
-        StartCoroutine(InitiateStoryAdvance());
-    }
-
-    private IEnumerator InitiateStoryAdvance()
-    {
-        yield return new WaitForSeconds(advanceDelay);
-        allowAdvance = true;
         ShowNextLine();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && allowAdvance && currentLine < storyLines.Length - 1)
-        {
-            ShowNextLine();
-        }
-
         if (characterMovement.pebblesCollected == 3 && !pebbleCompletion)
         {
             OnTaskCompleted();
@@ -58,18 +45,41 @@ public class StoryManager : MonoBehaviour
 
     public void ShowNextLine()
     {
-        storyText.text = storyLines[currentLine];
-        currentLine++;
-
-        if (currentLine == 3)
+        if (currentLine < storyLines.Length)
         {
-            characterMovement.canMove = true;
+            storyText.text = storyLines[currentLine];
+            currentLine++;
+            if (currentLine == 3)
+            {
+                characterMovement.canMove = true;
+            }
+            else if (currentLine < storyLines.Length)
+            {
+                StopCoroutine("DisplayTextWithDelay");
+                StartCoroutine(DisplayTextWithDelay());
+            }
+        }
+    }
+
+    private IEnumerator DisplayTextWithDelay()
+    {
+        yield return new WaitForSeconds(displayDuration);
+        if (currentLine != 3)
+        {
+            ShowNextLine();
         }
     }
 
     public void OnTaskCompleted()
     {
         pebbleCompletion = true;
-        storyText.text = storyLines[storyLines.Length - 1];  // Display the last line directly here
+        storyText.text = storyLines[storyLines.Length - 1];
+        StartCoroutine(HideLastLineAfterDuration());
+    }
+
+    private IEnumerator HideLastLineAfterDuration()
+    {
+        yield return new WaitForSeconds(displayDuration);
+        storyText.text = "";
     }
 }

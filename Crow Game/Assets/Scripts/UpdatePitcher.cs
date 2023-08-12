@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Pitcher : MonoBehaviour
 {
-
-
     private string[] pitcherWaterLevelNames =
     {
         "PitcherEmpty",
@@ -17,6 +15,8 @@ public class Pitcher : MonoBehaviour
     private Animator pitcherAnimator;
     private int pebblesInPitcher = 0;
 
+    public CameraController cameraController;
+
     private void Awake()
     {
         pitcherAnimator = GetComponent<Animator>();
@@ -27,6 +27,10 @@ public class Pitcher : MonoBehaviour
         pebblesInPitcher++;
         UpdatePitcherSprite();
 
+        if(pebblesInPitcher == 3)
+        {
+            cameraController.PlayAct1TransitionAnimation();
+        }
     }
 
     private void UpdatePitcherSprite()
