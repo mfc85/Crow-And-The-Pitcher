@@ -11,7 +11,7 @@ public class StoryManager : MonoBehaviour
 
     private int currentLine = 0;
     private bool pebbleCompletion = false;
-    private float displayDuration = 5.0f;
+    public float displayDuration = 5.0f;
 
     private string[] storyLines =
     {

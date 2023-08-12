@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
     public GameObject UICanvas;
     public Animator cameraAnimator;
 
+    public GameObject arrowSign; 
+
     private bool animationPlayed = false;
 
     private void Start()
@@ -28,5 +30,6 @@ public class CameraController : MonoBehaviour
     public void PlayAct1TransitionAnimation()
     {
         cameraAnimator.Play("CameraAct1Transition");
+        arrowSign.SetActive(true);
     }
 }

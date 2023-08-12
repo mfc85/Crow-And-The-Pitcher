@@ -123,6 +123,15 @@ public class CrowMovement : MonoBehaviour
 
                 this.targetPosition = targetPosition;
             }
+
+            else if (hit.collider.CompareTag("Rooster") || hit.collider.CompareTag("Dirt") || hit.collider.CompareTag("Jewel") || hit.collider.CompareTag("Trash"))
+            {
+                Vector3 targetPosition = hit.point;
+                targetPosition.y = characterController.transform.position.y;
+
+                this.targetPosition = targetPosition;
+            }
+
             else
             {
 
