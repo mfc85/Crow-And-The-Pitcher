@@ -17,9 +17,9 @@ public class Digging : MonoBehaviour
 
     public CrowMovement characterMovement;
 
-    private void OnTriggerEnter(Collider collision) // Corrected this line
+    private void OnTriggerEnter(Collider collision)
     {
-        if(collision.CompareTag("Crow"))
+        if(collision.CompareTag("Crow") && !characterMovement.isHoldingTrash && RoosterDialogue.hasInteractedWithRooster)
         {
             StartDigging();
         }
@@ -28,6 +28,8 @@ public class Digging : MonoBehaviour
     private void StartDigging()
     {
         characterMovement.canMove = false;
+	characterMovement.targetPosition = characterMovement.characterController.transform.position;
+	characterMovement.targetDest.transform.position = characterMovement.targetDestOriginalPosition;
         isInteracting = true;
         progressBarUI.SetActive(true);
         clickUI.SetActive(true);
@@ -52,19 +54,17 @@ public class Digging : MonoBehaviour
         isInteracting = false;
         progressBarUI.SetActive(false);
         clickUI.SetActive(false);
-
         characterMovement.canMove = true;
 
         pilesDug++;
 
-        GameObject item;
         if (pilesDug == 3)
         {
-            item = Instantiate(jewelPrefab, transform.position, Quaternion.identity);
+            characterMovement.isHoldingJewel = true;
         }
         else
         {
-            item = Instantiate(trashPrefab, transform.position, Quaternion.identity);
+            characterMovement.isHoldingTrash = true;
         }
 
         Destroy(gameObject);

@@ -8,6 +8,7 @@ public class Pitcher : MonoBehaviour
         "PitcherOne",
         "PitcherTwo",
         "PitcherThree",
+	"PitcherFour",
         "PitcherFive",
         "PitcherEight"
     };

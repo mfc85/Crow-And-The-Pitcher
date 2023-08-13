@@ -3,32 +3,29 @@ using UnityEngine;
 public class CrowMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float arrivalDistance = 0.1f; // How far Crow is to be considered "at destination"
-    private CharacterController characterController;
-    private Vector3 targetPosition;
+    public float arrivalDistance = 0.1f;
+    internal CharacterController characterController;
+    internal Vector3 targetPosition;
     public GameObject targetDest;
-    private Vector3 targetDestOriginalPosition; // Stores resting spot of the target indicator
+    internal Vector3 targetDestOriginalPosition;
 
-    //variables for pebble collection
+    // Variables for item collection
     public int pebblesCollected = 0;
     public int pebblesNeeded = 10;
     public bool isHoldingPebble = false;
-    public bool canHoldMultiplePebbles = false; // Limit for the Exposition: Crow only places the pebbles in one-by-one
+    public bool canHoldMultiplePebbles = false;
+    public bool isHoldingJewel = false;
+    public bool isHoldingTrash = false;
 
-    //for Exposition + Talking to NPCs
     public bool canMove = false;
-
-    //variable for animator
     public Animator animator;
-
-    //variable for pitcher animation interaction
     public Pitcher pitcherComponent;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        targetDestOriginalPosition = targetDest.transform.position; // Saves the resting spot upon start
-        targetPosition = characterController.transform.position; // Initialize targetPosition to the character's initial position
+        targetDestOriginalPosition = targetDest.transform.position;
+        targetPosition = characterController.transform.position;
     }
 
     void Update()
@@ -45,20 +42,14 @@ public class CrowMovement : MonoBehaviour
             MoveTowardsMousePosition();
         }
 
-        // Calculate the movement direction and move Crow
         Vector3 moveDirection = (targetPosition - characterController.transform.position);
 
-        //Flips Crow based on direction
-        if(moveDirection.x < 0) // left
-        {
+        // Flips Crow based on direction
+        if(moveDirection.x < 0) 
             transform.rotation = Quaternion.Euler(0, -180, 0);
-        }
-        else if(moveDirection.x > 0) // right
-        {
+        else if(moveDirection.x > 0) 
             transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
 
-        // If Crow is close enough to the target, stop moving
         if (moveDirection.magnitude < arrivalDistance)
         {
             moveDirection = Vector3.zero;
@@ -71,74 +62,38 @@ public class CrowMovement : MonoBehaviour
 
         characterController.SimpleMove(moveDirection);
 
-        // Animation Status
-        if(moveDirection.magnitude > 0)
-        {
-            animator.SetBool("isWalking", true);
-        }
-        else
-        {
-            animator.SetBool("isWalking", false);
-        }
-
+        animator.SetBool("isWalking", moveDirection.magnitude > 0);
         animator.SetBool("hasPebble", isHoldingPebble);
-
+        animator.SetBool("hasJewel", isHoldingJewel);
+        animator.SetBool("hasTrash", isHoldingTrash);
     }
 
     void MoveToClickPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
         if (Physics.Raycast(ray, out hit))
         {
-            // Check if the raycast hit any object tagged as "Ground"
             if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Pebble") || hit.collider.CompareTag("Pitcher"))
-            {
                 targetPosition = hit.point;
-            }
-            else
-            {
-
-            }
-
             targetDest.transform.position = hit.point;
-
         }
-
     }
 
     void MoveTowardsMousePosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
         if (Physics.Raycast(ray, out hit))
         {
-            // Check if the raycast hit any object tagged as "Ground"
-            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Pebble") || hit.collider.CompareTag("Pitcher"))
+            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Pebble") || hit.collider.CompareTag("Pitcher") ||
+                hit.collider.CompareTag("Rooster") || hit.collider.CompareTag("Dirt") || hit.collider.CompareTag("Jewel") || hit.collider.CompareTag("Trash"))
             {
-                Vector3 targetPosition = hit.point;
-                targetPosition.y = characterController.transform.position.y;
-
-                this.targetPosition = targetPosition;
+                Vector3 tempPosition = hit.point;
+                tempPosition.y = characterController.transform.position.y;
+                targetPosition = tempPosition;
             }
-
-            else if (hit.collider.CompareTag("Rooster") || hit.collider.CompareTag("Dirt") || hit.collider.CompareTag("Jewel") || hit.collider.CompareTag("Trash"))
-            {
-                Vector3 targetPosition = hit.point;
-                targetPosition.y = characterController.transform.position.y;
-
-                this.targetPosition = targetPosition;
-            }
-
-            else
-            {
-
-            }
-
             targetDest.transform.position = hit.point;
-
         }
     }
 
@@ -150,26 +105,19 @@ public class CrowMovement : MonoBehaviour
             {
                 isHoldingPebble = true;
                 Destroy(other.gameObject);
-
             }
             else if (canHoldMultiplePebbles)
             {
                 pebblesCollected++;
                 Destroy(other.gameObject);
-
             }
-            
         }
-
         else if(other.gameObject.CompareTag("Pitcher") && isHoldingPebble)
         {
             isHoldingPebble = false;
             pebblesCollected++;
-
             pitcherComponent.AddPebble();
-
         }
 
     }
-
 }
