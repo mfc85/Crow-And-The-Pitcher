@@ -15,11 +15,11 @@ public class Digging : MonoBehaviour
     private int currentClicks = 0;
     private bool isInteracting = false;
 
-    public CrowMovement characterMovement;
+    public CrowMovement crowMovement;
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.CompareTag("Crow") && !characterMovement.isHoldingTrash && RoosterDialogue.hasInteractedWithRooster)
+        if(collision.CompareTag("Crow") && !crowMovement.isHoldingTrash && RoosterDialogue.hasInteractedWithRooster)
         {
             StartDigging();
         }
@@ -27,9 +27,11 @@ public class Digging : MonoBehaviour
 
     private void StartDigging()
     {
-        characterMovement.canMove = false;
-	characterMovement.targetPosition = characterMovement.characterController.transform.position;
-	characterMovement.targetDest.transform.position = characterMovement.targetDestOriginalPosition;
+        crowMovement.canMove = false;
+        crowMovement.animator.SetBool("isWalking", false);
+
+        crowMovement.targetPosition = crowMovement.characterController.transform.position;
+	    crowMovement.targetDest.transform.position = crowMovement.targetDestOriginalPosition;
         isInteracting = true;
         progressBarUI.SetActive(true);
         clickUI.SetActive(true);
@@ -54,17 +56,17 @@ public class Digging : MonoBehaviour
         isInteracting = false;
         progressBarUI.SetActive(false);
         clickUI.SetActive(false);
-        characterMovement.canMove = true;
+        crowMovement.canMove = true;
 
         pilesDug++;
 
         if (pilesDug == 3)
         {
-            characterMovement.isHoldingJewel = true;
+            crowMovement.isHoldingJewel = true;
         }
         else
         {
-            characterMovement.isHoldingTrash = true;
+            crowMovement.isHoldingTrash = true;
         }
 
         Destroy(gameObject);
