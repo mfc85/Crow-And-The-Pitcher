@@ -16,6 +16,7 @@ public class CrowMovement : MonoBehaviour
     public bool canHoldMultiplePebbles = false;
     public bool isHoldingJewel = false;
     public bool isHoldingTrash = false;
+    public bool isHoldingFeather = false;
 
     public bool canMove = false;
     public Animator animator;
@@ -66,6 +67,7 @@ public class CrowMovement : MonoBehaviour
         animator.SetBool("hasPebble", isHoldingPebble);
         animator.SetBool("hasJewel", isHoldingJewel);
         animator.SetBool("hasTrash", isHoldingTrash);
+        animator.SetBool("hasFeather", isHoldingFeather);
     }
 
     void MoveToClickPosition()

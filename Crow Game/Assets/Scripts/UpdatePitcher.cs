@@ -8,7 +8,7 @@ public class Pitcher : MonoBehaviour
         "PitcherOne",
         "PitcherTwo",
         "PitcherThree",
-	"PitcherFour",
+	    "PitcherFour",
         "PitcherFive",
         "PitcherEight"
     };
@@ -31,6 +31,10 @@ public class Pitcher : MonoBehaviour
         if(pebblesInPitcher == 3)
         {
             cameraController.PlayAct1TransitionAnimation();
+        }
+        if(pebblesInPitcher == 5)
+        {
+            cameraController.PlayAct2TransitionAnimation();
         }
     }
 

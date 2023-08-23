@@ -4,12 +4,12 @@ using System.Collections;
 public class RoosterDialogue : MonoBehaviour
 {
 
-    // regular dialogue
+    // Regular dialogue
     public GameObject defaultDialogue;
     public GameObject trashDialogue;
     public GameObject thanksDialogue;
 
-    // intro dialogue
+    // Intro dialogue
     public GameObject introDialogue1;
     public GameObject introDialogue2;
     public GameObject introDialogue3;
@@ -20,7 +20,7 @@ public class RoosterDialogue : MonoBehaviour
 
     private bool isIntroPlaying = false;
 
-    // jewel dialogue
+    // "Outro" dialogue
     public GameObject jewelDialogue1;
     public GameObject jewelDialogue2;
     public GameObject jewelDialogue3;
