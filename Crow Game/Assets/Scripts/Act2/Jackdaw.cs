@@ -125,6 +125,7 @@ public class JackdawDialogue: MonoBehaviour
         IntroJackdaw2.SetActive(false);
 
         cameraController.PlayAct2PanAnimation();
+        transform.Rotate(0, 180, 0);
 
         crowMovement.canMove = true;
         isIntroPlaying = false;

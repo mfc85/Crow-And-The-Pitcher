@@ -3,22 +3,25 @@ using UnityEngine.UI;
 
 public class PeacockMinigame : MonoBehaviour
 {
-    public RectTransform indicator; // Slider indicator (shows where you'd hit if you click)
-    public RectTransform successZone; // Where you WANT to hit/click
-    public RectTransform sliderBox; // The box the indicator moves within
-    public float speed = 5f; // Speed that the indicator moves back and forth
+    public GameObject minigameUI;
+    public RectTransform indicator;
+    public RectTransform successZone;
+    public RectTransform sliderBox;
+    public float baseSpeed = 5f; // Base speed of the indicator
+    public float speedIncrement = 1.5f; // Increase in speed for every play
+    private float currentSpeed; // Current speed of the indicator
 
-    public GameObject minigameUI; // Parent object containing Indicator, Success Zone, and Slider Box
     public CrowMovement crowMovement;
 
     private bool movingRight = true;
-    private int successCount = 0;
+    private int playCount = 0; // Counter for how many times the game has been played
+    private const int maxPlayCount = 3; // Maximum times the game can be played
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Crow"))
+        if (other.CompareTag("Crow") && playCount < maxPlayCount)
         {
-            if (!crowMovement.isHoldingFeather && successCount < 3)
+            if (!crowMovement.isHoldingFeather)
             {
                 StartMinigame();
             }
@@ -27,17 +30,23 @@ public class PeacockMinigame : MonoBehaviour
 
     private void StartMinigame()
     {
+        playCount++;
+        currentSpeed = baseSpeed + (speedIncrement * (playCount - 1)); // Adjust speed based on play count
+
         crowMovement.canMove = false;
         crowMovement.animator.SetBool("isWalking", false);
+
         crowMovement.targetPosition = crowMovement.characterController.transform.position;
         crowMovement.targetDest.transform.position = crowMovement.targetDestOriginalPosition;
 
-        minigameUI.SetActive(true); // Activate the UI elements
-        this.enabled = true;
+        minigameUI.SetActive(true);
     }
 
     private void Update()
     {
+        if (!minigameUI.activeSelf)
+            return;
+
         MoveIndicator();
 
         if (Input.GetMouseButtonDown(0))
@@ -48,20 +57,22 @@ public class PeacockMinigame : MonoBehaviour
 
     void MoveIndicator()
     {
+        float sliderBoundary = sliderBox.rect.width / 2 - indicator.rect.width / 2;
+
         if (movingRight)
         {
-            indicator.localPosition += Vector3.right * speed * Time.deltaTime;
+            indicator.localPosition += Vector3.right * currentSpeed * Time.deltaTime;
 
-            if (indicator.localPosition.x >= (sliderBox.rect.width / 2) - (indicator.rect.width / 2))
+            if (indicator.localPosition.x >= sliderBoundary)
             {
                 movingRight = false;
             }
         }
         else
         {
-            indicator.localPosition -= Vector3.right * speed * Time.deltaTime;
+            indicator.localPosition -= Vector3.right * currentSpeed * Time.deltaTime;
 
-            if (indicator.localPosition.x <= -(sliderBox.rect.width / 2) + (indicator.rect.width / 2))
+            if (indicator.localPosition.x <= -sliderBoundary)
             {
                 movingRight = true;
             }
@@ -70,20 +81,17 @@ public class PeacockMinigame : MonoBehaviour
 
     void CheckSuccess()
     {
-        if (indicator.localPosition.x >= -successZone.rect.width / 2 && indicator.localPosition.x <= successZone.rect.width / 2)
+        if (indicator.localPosition.x >= successZone.localPosition.x - successZone.rect.width / 2 &&
+            indicator.localPosition.x <= successZone.localPosition.x + successZone.rect.width / 2)
         {
-            // Success !!!
-            successCount++;
             EndMinigame();
         }
     }
 
     private void EndMinigame()
     {
-        this.enabled = false;
+        minigameUI.SetActive(false);
         crowMovement.canMove = true;
         crowMovement.isHoldingFeather = true;
-
-        minigameUI.SetActive(false); // Deactivate the UI elements
     }
 }
