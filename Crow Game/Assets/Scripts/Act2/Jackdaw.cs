@@ -34,6 +34,8 @@ public class JackdawDialogue: MonoBehaviour
 
     private Coroutine dialogueCoroutine;
 
+    public Animator jackdawAnimator;
+
     private void Start()
     {
         defaultDialogue.SetActive(false);
@@ -70,6 +72,8 @@ public class JackdawDialogue: MonoBehaviour
                     featherDialogue.SetActive(true);
                     crowMovement.isHoldingFeather = false;
                     numberOfFeathersGiven++;
+
+                    UpdateJackdawSprite();
                 }
 
                 if(crowMovement.isHoldingFeather & numberOfFeathersGiven == 2)
@@ -163,4 +167,24 @@ public class JackdawDialogue: MonoBehaviour
         finalFeatherDialogue1.SetActive(false);
         finalFeatherDialogue2.SetActive(false);
     }
+
+    private void UpdateJackdawSprite()
+    {
+        switch (numberOfFeathersGiven)
+        {
+            case 1:
+                jackdawAnimator.Play("JackdawOneFeather");
+                break;
+            case 2:
+                jackdawAnimator.Play("JackdawTwoFeather");
+                break;
+            case 3:
+                jackdawAnimator.Play("JackdawThreeFeather");
+                break;
+            default:
+                jackdawAnimator.Play("JackdawIdle");
+                break;
+        }
+    }
+
 }
