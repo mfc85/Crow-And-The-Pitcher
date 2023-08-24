@@ -3723,6 +3723,7 @@ MonoBehaviour:
   cameraController: {fileID: 134784432}
   pebbleSix: {fileID: 335098992}
   pebbleSeven: {fileID: 762149433}
+  jackdawAnimator: {fileID: 976068670}
 --- !u!1 &994733581
 GameObject:
   m_ObjectHideFlags: 0
