@@ -38,6 +38,7 @@ public class RoosterDialogue : MonoBehaviour
 
     public CrowMovement crowMovement;
     public Animator pitcherAnimator;
+    public CameraController cameraController;
 
     public GameObject pebbleFour;
     public GameObject pebbleFive;
@@ -148,6 +149,9 @@ public class RoosterDialogue : MonoBehaviour
         introDialogue7.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
         introDialogue7.SetActive(false);
+
+        cameraController.PlayAct1PanAnimation();
+        transform.Rotate(0, 180, 0);
 
         crowMovement.canMove = true;
         isIntroPlaying = false;

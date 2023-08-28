@@ -10,12 +10,17 @@ public class JackdawDialogue: MonoBehaviour
     // Intro Dialogue
     public GameObject IntroJackdaw1;
     public GameObject IntroJackdaw2;
+    public GameObject IntroJackdaw3;
+    public GameObject IntroJackdaw4;
+    public GameObject IntroJackdaw5;
 
     private bool isIntroPlaying = false;
 
     // "Outro" Dialogue
     public GameObject finalFeatherDialogue1;
     public GameObject finalFeatherDialogue2;
+    public GameObject finalFeatherDialogue3;
+    public GameObject finalFeatherDialogue4;
 
     private bool isFinalSequencePlaying = false;
 
@@ -36,6 +41,8 @@ public class JackdawDialogue: MonoBehaviour
 
     public Animator jackdawAnimator;
 
+    private bool featherDialogueTriggered = false;
+
     private void Start()
     {
         defaultDialogue.SetActive(false);
@@ -45,6 +52,10 @@ public class JackdawDialogue: MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        Debug.Log("OnTriggerEnter called. isHoldingFeather: " + crowMovement.isHoldingFeather);
+
+
         if (other.CompareTag("Crow"))
         {
             if (!hasShownIntro)
@@ -59,34 +70,40 @@ public class JackdawDialogue: MonoBehaviour
 
             if (isIntroPlaying || isFinalSequencePlaying)
             {
-                Debug.Log("Cannot Continute");
                 return;
             }
 
 
             else if (Time.time - lastInteraction > dialogueDuration)
             {
-                Debug.Log("Crow Can Interact");
-                if (crowMovement.isHoldingFeather)
+
+                if (crowMovement.isHoldingFeather && numberOfFeathersGiven == 2)
                 {
+                    crowMovement.isHoldingFeather = false;
+                    numberOfFeathersGiven++;
+                    UpdateJackdawSprite();
+
+                    StartCoroutine(PlayFinalFeatherDialogue());
+
+                }
+
+                else if (crowMovement.isHoldingFeather)
+                {
+                    Debug.Log("Playing Feather Dialogue");
                     featherDialogue.SetActive(true);
                     crowMovement.isHoldingFeather = false;
                     numberOfFeathersGiven++;
 
                     UpdateJackdawSprite();
+
+                    featherDialogueTriggered = true;
                 }
 
-                if(crowMovement.isHoldingFeather & numberOfFeathersGiven == 2)
+                else if(!featherDialogueTriggered)
                 {
-                    crowMovement.isHoldingFeather = false;
-                    StartCoroutine(PlayFinalFeatherDialogue());
-
-                }
-
-                else
-                {
-                    Debug.Log("Crow Is holding Nothing");
+                    Debug.Log("Playing Default Dialogue");
                     defaultDialogue.SetActive(true);
+
                 }
 
 
@@ -109,6 +126,8 @@ public class JackdawDialogue: MonoBehaviour
                 StopCoroutine(dialogueCoroutine);
             }
             dialogueCoroutine = StartCoroutine(HideDialogueAfterDelayAct2());
+
+            featherDialogueTriggered = false;
         }
     }
 
@@ -128,6 +147,18 @@ public class JackdawDialogue: MonoBehaviour
         yield return new WaitForSeconds(dialogueDuration);
         IntroJackdaw2.SetActive(false);
 
+        IntroJackdaw3.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        IntroJackdaw3.SetActive(false);
+
+        IntroJackdaw4.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        IntroJackdaw4.SetActive(false);
+
+        IntroJackdaw5.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        IntroJackdaw5.SetActive(false);
+
         cameraController.PlayAct2PanAnimation();
         transform.Rotate(0, 180, 0);
 
@@ -137,11 +168,6 @@ public class JackdawDialogue: MonoBehaviour
 
     private IEnumerator PlayFinalFeatherDialogue()
     {
-        crowMovement.canMove = false;
-        crowMovement.animator.SetBool("isWalking", false);
-
-        crowMovement.targetPosition = crowMovement.characterController.transform.position;
-        crowMovement.targetDest.transform.position = crowMovement.targetDestOriginalPosition;
 
         finalFeatherDialogue1.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
@@ -151,10 +177,20 @@ public class JackdawDialogue: MonoBehaviour
         yield return new WaitForSeconds(dialogueDuration);
         finalFeatherDialogue2.SetActive(false);
 
+        finalFeatherDialogue3.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        finalFeatherDialogue3.SetActive(false);
+
+        finalFeatherDialogue4.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        finalFeatherDialogue4.SetActive(false);
+
+
         pebbleSix.SetActive(true);
         pebbleSeven.SetActive(true);
 
-        crowMovement.canMove = true;
+        GetComponent<BoxCollider>().enabled = false;
+
         isFinalSequencePlaying = false;
     }
 
@@ -164,12 +200,12 @@ public class JackdawDialogue: MonoBehaviour
 
         defaultDialogue.SetActive(false);
         featherDialogue.SetActive(false);
-        finalFeatherDialogue1.SetActive(false);
-        finalFeatherDialogue2.SetActive(false);
     }
 
     private void UpdateJackdawSprite()
     {
+        Debug.Log("Updated Sprite. Number of feathers: " + numberOfFeathersGiven);
+
         switch (numberOfFeathersGiven)
         {
             case 1:

@@ -32,6 +32,10 @@ public class CameraController : MonoBehaviour
         cameraAnimator.Play("CameraAct1Transition");
         arrowSign.SetActive(true);
     }
+    public void PlayAct1PanAnimation()
+    {
+        cameraAnimator.Play("CameraAct1Pan");
+    }
     public void PlayAct2TransitionAnimation()
     {
         cameraAnimator.Play("CameraAct2Transition");
