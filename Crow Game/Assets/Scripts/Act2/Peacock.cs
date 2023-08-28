@@ -12,6 +12,7 @@ public class PeacockMinigame : MonoBehaviour
     private float currentSpeed; // Current speed of the indicator
 
     public CrowMovement crowMovement;
+    public Animator peacockAnimator;
 
     private bool movingRight = true;
     private int playCount = 0; // Counter for how many times the game has been played
@@ -30,7 +31,6 @@ public class PeacockMinigame : MonoBehaviour
 
     private void StartMinigame()
     {
-        playCount++;
         currentSpeed = baseSpeed + (speedIncrement * (playCount - 1)); // Adjust speed based on play count
 
         crowMovement.canMove = false;
@@ -52,6 +52,11 @@ public class PeacockMinigame : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             CheckSuccess();
+        }
+
+        if (playCount == 3)
+        {
+            peacockAnimator.Play("PeacockWalk");
         }
     }
 
@@ -93,5 +98,6 @@ public class PeacockMinigame : MonoBehaviour
         minigameUI.SetActive(false);
         crowMovement.canMove = true;
         crowMovement.isHoldingFeather = true;
+        playCount++;
     }
 }

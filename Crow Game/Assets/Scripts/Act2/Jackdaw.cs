@@ -40,6 +40,7 @@ public class JackdawDialogue: MonoBehaviour
     private Coroutine dialogueCoroutine;
 
     public Animator jackdawAnimator;
+    public Animator pitcherAnimator;
 
     private bool featherDialogueTriggered = false;
 
@@ -181,17 +182,18 @@ public class JackdawDialogue: MonoBehaviour
         yield return new WaitForSeconds(dialogueDuration);
         finalFeatherDialogue3.SetActive(false);
 
+        pebbleSix.SetActive(true);
+        pebbleSeven.SetActive(true);
+
         finalFeatherDialogue4.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
         finalFeatherDialogue4.SetActive(false);
 
-
-        pebbleSix.SetActive(true);
-        pebbleSeven.SetActive(true);
-
         GetComponent<BoxCollider>().enabled = false;
 
         isFinalSequencePlaying = false;
+
+        pitcherAnimator.Play("PitcherMovementAct2");
     }
 
     IEnumerator HideDialogueAfterDelayAct2()
