@@ -3840,8 +3840,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.5613208, g: 0.7319182, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -4143,6 +4143,7 @@ MonoBehaviour:
   pebbleSix: {fileID: 335098992}
   pebbleSeven: {fileID: 762149433}
   jackdawAnimator: {fileID: 976068670}
+  pitcherAnimator: {fileID: 0}
 --- !u!1 &994733581
 GameObject:
   m_ObjectHideFlags: 0
@@ -4572,6 +4573,7 @@ MonoBehaviour:
   baseSpeed: 5
   speedIncrement: 1.5
   crowMovement: {fileID: 1303655799}
+  peacockAnimator: {fileID: 0}
 --- !u!65 &1101716463
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5940,7 +5942,7 @@ SpriteRenderer:
   m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1392230971
@@ -6967,7 +6969,7 @@ SpriteRenderer:
   m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1742628707
@@ -7055,7 +7057,7 @@ SpriteRenderer:
   m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1751924783
