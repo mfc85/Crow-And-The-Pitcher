@@ -45,4 +45,8 @@ public class CameraController : MonoBehaviour
     {
         cameraAnimator.Play("CameraAct2Pan");
     }
+    public void Act3()
+    {
+        cameraAnimator.Play("CameraAct3Transition");
+    }
 }

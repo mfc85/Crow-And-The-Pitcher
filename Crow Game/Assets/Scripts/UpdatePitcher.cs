@@ -36,6 +36,10 @@ public class Pitcher : MonoBehaviour
         {
             cameraController.PlayAct2TransitionAnimation();
         }
+        if(pebblesInPitcher == 7)
+        {
+            cameraController.Act3();
+        }
     }
 
     private void UpdatePitcherSprite()
