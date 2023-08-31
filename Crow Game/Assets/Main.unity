@@ -6047,7 +6047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1363923977}
   - component: {fileID: 1363923978}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TempSliderSuccess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6062,7 +6062,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363923976}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -12037}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -6093,7 +6093,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6111,8 +6111,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 67586405
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5cbaee923bbb018428e6d0cb12969bec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7439,7 +7439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1720296168}
   - component: {fileID: 1720296169}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TempSliderBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7454,17 +7454,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720296167}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -12037}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1742628708}
   m_Father: {fileID: 1920166473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 0}
-  m_SizeDelta: {x: 409.446, y: 3.7317}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 9.446014, y: 3.7317}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1720296169
 SpriteRenderer:
@@ -7486,7 +7486,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7504,8 +7504,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 67586405
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0bf3086395ac14f49918d230131ab76b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7528,7 +7528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1742628708}
   - component: {fileID: 1742628709}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TempSliderIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7574,7 +7574,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7592,8 +7592,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 67586405
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: da075ed4ad18ba141a25ee992786ee69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8112,7 +8112,7 @@ GameObject:
   - component: {fileID: 1920166476}
   - component: {fileID: 1920166475}
   - component: {fileID: 1920166474}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Act2Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9374,6 +9374,8 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1920166473}
+  - {fileID: 235458594}
   - {fileID: 850235420}
   - {fileID: 963194228}
   - {fileID: 705507995}
@@ -9385,8 +9387,6 @@ SceneRoots:
   - {fileID: 1055408918}
   - {fileID: 2016123549}
   - {fileID: 125862651}
-  - {fileID: 1920166473}
-  - {fileID: 235458594}
   - {fileID: 1540371090}
   - {fileID: 1888785844}
   - {fileID: 737880922}
