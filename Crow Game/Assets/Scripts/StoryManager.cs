@@ -9,21 +9,30 @@ public class StoryManager : MonoBehaviour
     public GameObject titleScreenUI;
     public GameObject expositionUI;
 
-    private int currentLine = 0;
+   // private int currentLine = 0;
     private bool pebbleCompletion = false;
-    public float displayDuration = 5.0f;
+    public float dialogueDuration = 5f;
+    private float lastInteraction = 0f;
 
-    private string[] storyLines =
-    {
-        "This is the story of the Crow",
-        "and the Pitcher.",
-        "Oh. The Crow is thirsty. We must help the crow fill up the pitcher so he may drink! Put the pebbles in the Pitcher!",
-        "Nice! Now onward my friend toward your new adventure!"
-    };
+    public GameObject dialogue1;
+    public GameObject dialogue2;
+    public GameObject dialogue3;
+    public GameObject dialogue4;
+    public GameObject dialogue5;
+    public GameObject dialogue6;
+    public GameObject dialogue7;
+
+    // private string[] storyLines =
+    //{
+    //    "This is the story of the Crow",
+    //    "and the Pitcher.",
+    //    "Oh. The Crow is thirsty. We must help the crow fill up the pitcher so he may drink! Put the pebbles in the Pitcher!",
+    ////    "Nice! Now onward my friend toward your new adventure!"
+    // };
 
     private void Start()
     {
-        storyText.text = "";
+        //storyText.text = "";
         titleScreenUI.SetActive(true);
         expositionUI.SetActive(false);
     }
@@ -32,54 +41,99 @@ public class StoryManager : MonoBehaviour
     {
         titleScreenUI.SetActive(false);
         expositionUI.SetActive(true);
-        ShowNextLine();
+        StartCoroutine(PlayProDialogue());
+       // ShowNextLine();
     }
 
     private void Update()
     {
         if (characterMovement.pebblesCollected == 3 && !pebbleCompletion)
         {
-            OnTaskCompleted();
+            StartCoroutine(OnTaskCompleted());
         }
     }
 
-    public void ShowNextLine()
+    private IEnumerator PlayProDialogue()
     {
-        if (currentLine < storyLines.Length)
-        {
-            storyText.text = storyLines[currentLine];
-            currentLine++;
-            if (currentLine == 3)
-            {
-                characterMovement.canMove = true;
-            }
-            else if (currentLine < storyLines.Length)
-            {
-                StopCoroutine("DisplayTextWithDelay");
-                StartCoroutine(DisplayTextWithDelay());
-            }
-        }
+        dialogue1.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        dialogue1.SetActive(false);
+
+        dialogue2.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        dialogue2.SetActive(false);
+
+        dialogue3.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        dialogue3.SetActive(false);
+
+        dialogue4.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        dialogue4.SetActive(false);
+
+        characterMovement.canMove = true;
+
+        dialogue5.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        dialogue5.SetActive(false);
+
+
+        
+
     }
 
-    private IEnumerator DisplayTextWithDelay()
-    {
-        yield return new WaitForSeconds(displayDuration);
-        if (currentLine != 3)
-        {
-            ShowNextLine();
-        }
-    }
+    //public void ShowNextLine()
+    //{
+    //    if (currentLine < storyLines.Length)
+    //    {
+    //        storyText.text = storyLines[currentLine];
+    //        currentLine++;
+    //        if (currentLine == 3)
+    //        {
+    //            characterMovement.canMove = true;
+    //        }
+    //        else if (currentLine < storyLines.Length)
+    //        {
+    //            StopCoroutine("DisplayTextWithDelay");
+    //            StartCoroutine(DisplayTextWithDelay());
+    //        }
+    //    }
+    //}
 
-    public void OnTaskCompleted()
+    //private IEnumerator DisplayTextWithDelay()
+    //{
+    //    yield return new WaitForSeconds(displayDuration);
+    //    if (currentLine != 3)
+    //    {
+    //        ShowNextLine();
+    //    }
+    //}
+
+    public IEnumerator OnTaskCompleted()
     {
+
+        //storyText.text = storyLines[storyLines.Length - 1];
+        dialogue6.SetActive(true);
+        dialogue7.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        dialogue6.SetActive(false);
+        dialogue7.SetActive(false);
+
         pebbleCompletion = true;
-        storyText.text = storyLines[storyLines.Length - 1];
+
         StartCoroutine(HideLastLineAfterDuration());
     }
 
     private IEnumerator HideLastLineAfterDuration()
     {
-        yield return new WaitForSeconds(displayDuration);
-        storyText.text = "";
+        yield return new WaitForSeconds(dialogueDuration);
+
+        dialogue1.SetActive(false);
+        dialogue2.SetActive(false);
+        dialogue3.SetActive(false);
+        dialogue4.SetActive(false);
+        dialogue5.SetActive(false);
+        dialogue6.SetActive(false);
+        dialogue7.SetActive(false);
     }
 }
