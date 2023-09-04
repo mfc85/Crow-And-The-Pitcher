@@ -7,7 +7,7 @@ public class StoryManager : MonoBehaviour
     public TextMeshProUGUI storyText;
     public CrowMovement characterMovement;
     public GameObject titleScreenUI;
-    public GameObject expositionUI;
+    
 
    // private int currentLine = 0;
     private bool pebbleCompletion = false;
@@ -34,13 +34,21 @@ public class StoryManager : MonoBehaviour
     {
         //storyText.text = "";
         titleScreenUI.SetActive(true);
-        expositionUI.SetActive(false);
+        dialogue1.SetActive(false);
+        dialogue2.SetActive(false);
+        dialogue3.SetActive(false);
+        dialogue4.SetActive(false);
+        dialogue5.SetActive(false);
+        dialogue6.SetActive(false);
+        dialogue7.SetActive(false);
+
+
     }
 
     public void StartStory()
     {
         titleScreenUI.SetActive(false);
-        expositionUI.SetActive(true);
+        
         StartCoroutine(PlayProDialogue());
        // ShowNextLine();
     }

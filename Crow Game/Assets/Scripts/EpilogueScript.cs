@@ -6,6 +6,8 @@ public class EpilogueScript : MonoBehaviour
 {
     public float dialogueDuration = 5f;
 
+    public CrowMovement characterMovement;
+
     public GameObject epilogue1;
     public GameObject epilogue2;
     public GameObject epilogue3;
@@ -26,6 +28,8 @@ public class EpilogueScript : MonoBehaviour
 
     private IEnumerator PlayEpilogue()
     {
+        characterMovement.canMove = false;
+
         epilogue1.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
         epilogue1.SetActive(false);
