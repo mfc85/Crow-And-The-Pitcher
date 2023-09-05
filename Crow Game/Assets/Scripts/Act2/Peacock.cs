@@ -14,6 +14,9 @@ public class PeacockMinigame : MonoBehaviour
     public CrowMovement crowMovement;
     public Animator peacockAnimator;
 
+    public AudioClip yoink;
+    public AudioSource soundSource;
+
     private bool movingRight = true;
     private int playCount = 0; // Counter for how many times the game has been played
     private const int maxPlayCount = 3; // Maximum times the game can be played
@@ -95,6 +98,9 @@ public class PeacockMinigame : MonoBehaviour
 
     private void EndMinigame()
     {
+        soundSource.clip = yoink;
+        soundSource.Play();
+
         minigameUI.SetActive(false);
         crowMovement.canMove = true;
         crowMovement.isHoldingFeather = true;

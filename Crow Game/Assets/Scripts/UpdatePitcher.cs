@@ -18,13 +18,18 @@ public class Pitcher : MonoBehaviour
 
     public CameraController cameraController;
 
+    public AudioClip pebblePlonk;
+    public AudioSource soundSource;
+
     private void Awake()
     {
+        soundSource.clip = pebblePlonk;
         pitcherAnimator = GetComponent<Animator>();
     }
 
     public void AddPebble()
     {
+        soundSource.Play();
         pebblesInPitcher++;
         UpdatePitcherSprite();
 

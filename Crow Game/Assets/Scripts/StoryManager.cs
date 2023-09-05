@@ -14,6 +14,9 @@ public class StoryManager : MonoBehaviour
     public float dialogueDuration = 5f;
     private float lastInteraction = 0f;
 
+    public AudioClip buttonPress;
+    public AudioSource soundSource; 
+
     public GameObject dialogue1;
     public GameObject dialogue2;
     public GameObject dialogue3;
@@ -47,8 +50,9 @@ public class StoryManager : MonoBehaviour
 
     public void StartStory()
     {
+        soundSource.clip = buttonPress;
+        soundSource.Play();
         titleScreenUI.SetActive(false);
-        
         StartCoroutine(PlayProDialogue());
        // ShowNextLine();
     }

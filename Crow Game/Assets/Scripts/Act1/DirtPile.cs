@@ -17,6 +17,11 @@ public class Digging : MonoBehaviour
 
     public CrowMovement crowMovement;
 
+    public AudioClip digging;
+    public AudioClip jewel;
+    public AudioClip trash;
+    public AudioSource soundSource;
+
     private void OnTriggerEnter(Collider collision)
     {
         if(collision.CompareTag("Crow") && !crowMovement.isHoldingTrash && RoosterDialogue.hasInteractedWithRooster)
@@ -29,6 +34,9 @@ public class Digging : MonoBehaviour
     {
         crowMovement.canMove = false;
         crowMovement.animator.SetBool("isWalking", false);
+
+        soundSource.clip = digging;
+        soundSource.Play();
 
         crowMovement.targetPosition = crowMovement.characterController.transform.position;
 	    crowMovement.targetDest.transform.position = crowMovement.targetDestOriginalPosition;
@@ -46,6 +54,8 @@ public class Digging : MonoBehaviour
 
             if(currentClicks >= neededClicks)
             {
+                soundSource.clip = trash;
+                soundSource.Play();
                 FinishDigging();
             }
         }
@@ -63,9 +73,13 @@ public class Digging : MonoBehaviour
         if (pilesDug == 3)
         {
             crowMovement.isHoldingJewel = true;
+            soundSource.clip = jewel;
+            soundSource.Play();
         }
         else
         {
+            soundSource.clip = trash;
+            soundSource.Play();
             crowMovement.isHoldingTrash = true;
         }
 
