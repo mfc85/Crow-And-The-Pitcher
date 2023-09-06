@@ -17,6 +17,12 @@ public class EpilogueScript : MonoBehaviour
     public GameObject epilogue7;
     public GameObject epilogue8;
 
+    public GameObject crowDrinking;
+    public GameObject player;
+    public GameObject pitcher;
+
+    public GameObject endCard;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,7 +34,7 @@ public class EpilogueScript : MonoBehaviour
 
     private IEnumerator PlayEpilogue()
     {
-        characterMovement.canMove = false;
+        
 
         epilogue1.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
@@ -42,7 +48,11 @@ public class EpilogueScript : MonoBehaviour
         yield return new WaitForSeconds(dialogueDuration);
         epilogue3.SetActive(false);
 
-        //Here, set pitcher and crow inactive, and play the animation
+        characterMovement.canMove = false;
+
+        player.SetActive(false);
+        pitcher.SetActive(false);
+        crowDrinking.SetActive(true);
 
         epilogue4.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
@@ -63,5 +73,8 @@ public class EpilogueScript : MonoBehaviour
         epilogue8.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
         epilogue8.SetActive(false);
+
+        crowDrinking.SetActive(false);
+        endCard.SetActive(true);
     }
 }

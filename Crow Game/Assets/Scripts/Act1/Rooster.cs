@@ -4,6 +4,8 @@ using System.Collections;
 public class RoosterDialogue : MonoBehaviour
 {
 
+    public GameObject jewelSprite;
+
     // Regular dialogue
     public GameObject defaultDialogue;
     public GameObject trashDialogue;
@@ -50,6 +52,7 @@ public class RoosterDialogue : MonoBehaviour
 	defaultDialogue.SetActive(false);
 	trashDialogue.SetActive(false);
 	thanksDialogue.SetActive(false);
+        jewelSprite.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -164,6 +167,8 @@ public class RoosterDialogue : MonoBehaviour
 
         crowMovement.targetPosition = crowMovement.characterController.transform.position;
         crowMovement.targetDest.transform.position = crowMovement.targetDestOriginalPosition;
+
+        jewelSprite.SetActive(true);
 
         jewelDialogue1.SetActive(true);
         yield return new WaitForSeconds(dialogueDuration);
